@@ -11292,10 +11292,10 @@ react-onclickoutside@^6.7.1:
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
   integrity sha512-p84kBqGaMoa7VYT0vZ/aOYRfJB+gw34yjpda1Z5KeLflg70HipZOT+MXQenEhdkPAABuE2Astq4zEPdMqUQxcg==
 
-react-paginate@^5.2.3:
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/react-paginate/-/react-paginate-5.2.4.tgz#0a4d6d468ebb1795d0581bd4fc930ad57a86ae14"
-  integrity sha512-va0UxtGtJJih227VhYlo5TYgxXKM6pGmhgDnk8bNCf+R/gjyglk732vEIa8EAC8WLri80WJAvWzBqYYt2tBFug==
+react-paginate@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/react-paginate/-/react-paginate-6.0.0.tgz#cdd9382f3de9bdbdb435a86836a281ab2a954fd8"
+  integrity sha512-Xc4LTKqBYIpUKEhXx6x1sro0H9r2y2S5admGuDQT8xmhUNk22iTmDRY/XDB2kX4xKOa59xyK9uFGnNAqyHX1cA==
   dependencies:
     prop-types "^15.6.1"
 
