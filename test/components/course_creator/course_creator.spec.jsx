@@ -4,7 +4,6 @@ import React from 'react';
 
 import '../../testHelper';
 import CourseCreator from '../../../app/assets/javascripts/components/course_creator/course_creator.jsx';
-import ValidationActions from '../../../app/assets/javascripts/actions/validation_actions.js';
 import ServerActions from '../../../app/assets/javascripts/actions/server_actions.js';
 
 CourseCreator.__Rewire__('ValidationStore', {
@@ -12,26 +11,14 @@ CourseCreator.__Rewire__('ValidationStore', {
   firstMessage() { }
 });
 
-/**
-* returns the style attribute applied to a given node.
-  params:
-    node (enzyme node) the node you would like to inspect
-  returns empty string if no styles are found
-* */
-
-const getStyle = (node) => {
-  const rootTag = node.html().match(/(<.*?>)/)[1]; // grab the top tag
-  const styleMatch = rootTag.match(/style="([^"]*)"/i);
-  return styleMatch ? styleMatch[1] : '';
-};
-
-
 describe('CourseCreator', () => {
   describe('render', () => {
     const updateCourseSpy = sinon.spy();
     const fetchCampaignSpy = sinon.spy();
     const cloneCourseSpy = sinon.spy();
     const submitCourseSpy = sinon.spy();
+    const setValidSpy = sinon.spy();
+    const setInvalidSpy = sinon.spy();
 
     const TestCourseCreator = shallow(
       <CourseCreator
@@ -44,6 +31,8 @@ describe('CourseCreator', () => {
         cloneCourse={cloneCourseSpy}
         submitCourse={submitCourseSpy}
         loadingUserCourses={false}
+        setValid={setValidSpy}
+        setInvalid={setInvalidSpy}
       />
     );
 
@@ -74,8 +63,6 @@ describe('CourseCreator', () => {
     });
     describe('text inputs', () => {
       TestCourseCreator.setState({ default_course_type: 'ClassroomProgramCourse' });
-      const setValidSpy = sinon.spy(ValidationActions, 'setValid');
-
       describe('subject', () => {
         it('updates courseActions', () => {
           TestCourseCreator.instance().updateCourse('subject', 'some subject');
@@ -96,12 +83,11 @@ describe('CourseCreator', () => {
       sinon.stub(TestCourseCreator.instance(), 'expectedStudentsIsValid').callsFake(() => true);
       sinon.stub(TestCourseCreator.instance(), 'dateTimesAreValid').callsFake(() => true);
       const checkCourse = sinon.spy(ServerActions, 'checkCourse');
-      const setInvalid = sinon.spy(ValidationActions, 'setInvalid');
       it('calls the appropriate methods on the actions', () => {
         const button = TestCourseCreator.find('.button__submit');
         button.simulate('click');
         expect(checkCourse).to.have.been.called;
-        expect(setInvalid).to.have.been.called;
+        expect(setInvalidSpy).to.have.been.called;
       });
     });
   });
