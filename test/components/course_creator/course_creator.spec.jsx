@@ -4,7 +4,6 @@ import React from 'react';
 
 import '../../testHelper';
 import CourseCreator from '../../../app/assets/javascripts/components/course_creator/course_creator.jsx';
-import ServerActions from '../../../app/assets/javascripts/actions/server_actions.js';
 
 CourseCreator.__Rewire__('ValidationStore', {
   isValid() { return true; },
@@ -19,6 +18,7 @@ describe('CourseCreator', () => {
     const submitCourseSpy = sinon.spy();
     const setValidSpy = sinon.spy();
     const setInvalidSpy = sinon.spy();
+    const checkCourseSlugSpy = sinon.spy();
 
     const TestCourseCreator = shallow(
       <CourseCreator
@@ -33,6 +33,8 @@ describe('CourseCreator', () => {
         loadingUserCourses={false}
         setValid={setValidSpy}
         setInvalid={setInvalidSpy}
+        checkCourseSlug={checkCourseSlugSpy}
+        isValid
       />
     );
 
@@ -82,11 +84,11 @@ describe('CourseCreator', () => {
     describe('save course', () => {
       sinon.stub(TestCourseCreator.instance(), 'expectedStudentsIsValid').callsFake(() => true);
       sinon.stub(TestCourseCreator.instance(), 'dateTimesAreValid').callsFake(() => true);
-      const checkCourse = sinon.spy(ServerActions, 'checkCourse');
+
       it('calls the appropriate methods on the actions', () => {
         const button = TestCourseCreator.find('.button__submit');
         button.simulate('click');
-        expect(checkCourse).to.have.been.called;
+        expect(checkCourseSlugSpy).to.have.been.called;
         expect(setInvalidSpy).to.have.been.called;
       });
     });
